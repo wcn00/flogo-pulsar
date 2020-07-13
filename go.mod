@@ -1,4 +1,4 @@
-module github.com/wcn00/flogo-pulsar/
+module github.com/wcn00/flogo-pulsar
 
 go 1.12
 
