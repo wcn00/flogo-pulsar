@@ -1,0 +1,30 @@
+{
+	"name": "publish",
+	"type": "flogo:activity",
+	"version": "0.0.1",
+	"title": "Apache Pulsar activity",
+	"description": "A Simple activity to produce messages on apache pulsar",
+	"settings": [
+		{
+			"name": "connection",
+			"type": "connection",
+			"allowed": null,
+			"required": true
+		},
+		{
+			"name": "topic",
+			"required": true,
+			"description": "The topic to which the message will be published",
+			"type": "string",
+			"value": "String"
+		}
+	],
+	"input": [
+		{
+			"name": "payload",
+			"type": "string",
+			"allowed": null,
+			"required": false
+		}
+	]
+}

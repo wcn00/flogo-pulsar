@@ -1,0 +1,24 @@
+{
+	"name": "connection",
+	"title": "Apache Pulsar Connector",
+	"author": "TIBCO Software Inc.",
+	"type": "flogo:connector",
+	"version": "1.0.0",
+	"settings": [
+		{
+			"name": "name",
+			"type": "string",
+			"required": true
+		},
+		{
+			"name": "description",
+			"type": "string"
+		},
+		{
+			"name": "url",
+			"type": "string",
+			"required": true,
+			"value": ""
+		}		
+	]
+}
