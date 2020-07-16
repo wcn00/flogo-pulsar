@@ -1,4 +1,4 @@
-package activity
+package publish
 
 import (
 	"encoding/json"
@@ -17,7 +17,7 @@ var pulsarConGilJSON = []byte(`{
 	"connection": {
 		"id": "e1e890d0-de91-11e9-aef0-13201957902e",
 		"name": "pulsar",
-		"ref": "github.com/wcn00/messaging-contrib/pulsar/connection",
+		"ref": "github.com/wcn00/flogo-pulsar/connection",
 		"settings": {
 			"name": "TestConnectionToGil",
 			"description": "TestConnectionToGil",

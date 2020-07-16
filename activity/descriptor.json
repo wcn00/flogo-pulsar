@@ -2,8 +2,8 @@
 	"name": "publish",
 	"type": "flogo:activity",
 	"version": "0.0.1",
-	"title": "Apache Pulsar activity",
-	"description": "A Simple activity to produce messages on apache pulsar",
+	"title": "Pulsar Publish",
+	"description": "A Simple activity to publish messages to an Apache Pulsar broker",
 	"settings": [
 		{
 			"name": "connection",
@@ -16,7 +16,7 @@
 			"required": true,
 			"description": "The topic to which the message will be published",
 			"type": "string",
-			"value": "String"
+			"value": "{persistent|non-persistent}://tenant/namespace/topic"
 		}
 	],
 	"input": [

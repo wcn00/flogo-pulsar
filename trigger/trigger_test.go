@@ -1,4 +1,4 @@
-package trigger
+package subscriber
 
 import (
 	"encoding/json"
@@ -13,12 +13,12 @@ import (
 
 const testConfig string = `{
 	"id": "flogo-pulsar",
-	"ref": " github.com/project-flogo/messaging-contrib/pulsar/trigger",
+	"ref": " github.com/wcn00/flogo-pulsar/trigger",
 	"settings": {
 	  "connection": {
-		  "ref": "github.com/project-flogo/messaging-contrib/pulsar/connection",
+		  "ref": "github.com/wcn00/flogo-pulsar/connection",
 		  "settings":{
-			"url": "pulsar://localhost:6605"
+			"url": "pulsar://gil:6605"
 		  }
 	  }
 	},
@@ -28,8 +28,8 @@ const testConfig string = `{
 				"id":"dummy"
 			},
 			"settings": {
-			  "topic": "sample",
-			  "subscription":"sample-1"
+			  "topic": "wcntopic",
+			  "subscription":"wcntopic-sub"
 			}
 	  }
 	]
