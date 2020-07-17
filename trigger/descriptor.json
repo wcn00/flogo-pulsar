@@ -26,13 +26,15 @@
 				"name": "topic",
 				"type": "string",
 				"allowed": null,
-				"required": true
+				"required": true,
+				"value":"/tenant/namespace/topic"
 			},
 			{
 				"name": "subscription",
 				"type": "string",
 				"allowed": null,
-				"required": true
+				"required": true,
+				"value":""
 			}
 		]
 	}

@@ -1,6 +1,6 @@
 {
-	"name": "connection",
-	"title": "Apache Pulsar Connector",
+	"name": "pulsar-connection",
+	"title": "Apache Pulsar Client Configuration",
 	"author": "TIBCO Software Inc.",
 	"type": "flogo:connector",
 	"version": "1.0.0",
@@ -18,7 +18,7 @@
 			"name": "url",
 			"type": "string",
 			"required": true,
-			"value": ""
+			"value": "pulsar://localhost:6605"
 		}		
 	]
 }

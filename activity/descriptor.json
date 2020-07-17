@@ -14,9 +14,8 @@
 		{
 			"name": "topic",
 			"required": true,
-			"description": "The topic to which the message will be published",
 			"type": "string",
-			"value": "{persistent|non-persistent}://tenant/namespace/topic"
+			"value": "/tenant/namespace/topic"
 		}
 	],
 	"input": [
