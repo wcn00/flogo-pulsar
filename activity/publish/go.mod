@@ -1,4 +1,4 @@
-module github.com/wcn00/flogo-pulsar/publish
+module github.com/wcn00/flogo-pulsar/activity/publish
 
 go 1.12
 
