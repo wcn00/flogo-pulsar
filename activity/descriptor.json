@@ -25,5 +25,13 @@
 			"allowed": null,
 			"required": false
 		}
+	],
+	"output": [
+		{
+			"name": "payload",
+			"type": "string",
+			"allowed": null,
+			"required": false
+		}
 	]
 }
