@@ -56,4 +56,6 @@ func TestEval(t *testing.T) {
 	tc.SetInput("payload", "mary had a little lamb")
 	_, err = act.Eval(tc)
 	assert.Nil(t, err)
+	msgid := tc.GetOutput("msgid")
+	fmt.Printf("msgid is: %s \n", msgid)
 }

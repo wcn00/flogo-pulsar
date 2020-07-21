@@ -28,7 +28,7 @@
 	],
 	"output": [
 		{
-			"name": "payload",
+			"name": "msgid",
 			"type": "string",
 			"allowed": null,
 			"required": false

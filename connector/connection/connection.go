@@ -1,14 +1,17 @@
 package connection
 
 import (
+	"fmt"
+
 	"github.com/apache/pulsar-client-go/pulsar"
 	"github.com/project-flogo/core/data/metadata"
 	"github.com/project-flogo/core/support/connection"
 )
 
 func init() {
-	connection.RegisterManager("pulsarConnection", &PulsarConnection{})
+	connection.RegisterManager("connection", &PulsarConnection{})
 	connection.RegisterManagerFactory(&Factory{})
+	fmt.Println("registered conneciton ")
 }
 
 // Settings comment

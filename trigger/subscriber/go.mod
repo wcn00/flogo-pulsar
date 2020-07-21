@@ -1,6 +1,6 @@
 module github.com/wcn00/flogo-pulsar/trigger/subscriber
 
-go 1.12
+go 1.14
 
 require (
 	github.com/apache/pulsar-client-go v0.1.1

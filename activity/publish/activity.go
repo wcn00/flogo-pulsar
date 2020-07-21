@@ -71,6 +71,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	if err != nil {
 		return true, fmt.Errorf("Producer could not send message: %v", err)
 	}
+	ctx.SetOutput("msgid", fmt.Sprintf("%x", msgID.Serialize()))
 	fmt.Printf("PulsarActivity producer sent message ID: %x\n", msgID.Serialize())
 	return true, nil
 }
