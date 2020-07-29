@@ -18,7 +18,13 @@
 			"name": "url",
 			"type": "string",
 			"required": true,
-			"value": "pulsar://localhost:6605"
+			"value": "pulsar://localhost:6650"
+		},
+		{
+			"name": "certFile",
+			"type": "string",
+			"required": false,
+			"value": ""
 		}		
 	]
 }
