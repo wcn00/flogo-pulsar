@@ -25,6 +25,18 @@
 			"type": "string",
 			"required": false,
 			"value": ""
-		}		
+		},
+		{
+			"name": "keyFile",
+			"type": "string",
+			"required": false,
+			"value": ""
+		},
+		{
+			"name": "cacert",
+			"type": "string",
+			"required": false,
+			"value": ""
+		}
 	]
 }
