@@ -19,3 +19,6 @@
 [submodule "vendor/github.com/klauspost/compress"]
 	path = vendor/github.com/klauspost/compress
 	url = https://github.com/klauspost/compress
+[submodule "vendor/github.com/lib/pq"]
+	path = vendor/github.com/lib/pq
+	url = https://github.com/lib/pq
