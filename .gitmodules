@@ -43,3 +43,6 @@
 [submodule "vendor/github.com/yahoo/athenz"]
 	path = vendor/github.com/yahoo/athenz
 	url = https://github.com/yahoo/athenz
+[submodule "vendor/github.com/pmezard/go-difflib"]
+	path = vendor/github.com/pmezard/go-difflib
+	url = https://github.com/pmezard/go-difflib
