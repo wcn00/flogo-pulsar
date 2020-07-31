@@ -40,3 +40,6 @@
 [submodule "vendor/github.com/xo/dburl"]
 	path = vendor/github.com/xo/dburl
 	url = https://github.com/xo/dburl
+[submodule "vendor/github.com/yahoo/athenz"]
+	path = vendor/github.com/yahoo/athenz
+	url = https://github.com/yahoo/athenz
