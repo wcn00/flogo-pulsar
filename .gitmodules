@@ -4,3 +4,9 @@
 [submodule "vendor/github.com/DataDog/zstd"]
 	path = vendor/github.com/DataDog/zstd
 	url = https://github.com/DataDog/zstd
+[submodule "vendor/github.com/alecthomas/template"]
+	path = vendor/github.com/alecthomas/template
+	url = https://github.com/alecthomas/template
+[submodule "vendor/github.com/alecthomas/units"]
+	path = vendor/github.com/alecthomas/units
+	url = https://github.com/alecthomas/units
