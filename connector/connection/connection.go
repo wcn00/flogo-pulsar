@@ -11,7 +11,6 @@ import (
 	"github.com/apache/pulsar-client-go/pulsar"
 	"github.com/project-flogo/core/data/metadata"
 	"github.com/project-flogo/core/support/connection"
-	"github.com/prometheus/common/log"
 )
 
 func init() {
@@ -58,7 +57,7 @@ func (*Factory) NewManager(settings map[string]interface{}) (connection.Manager,
 	if err != nil {
 		return nil, err
 	}
-	log.Debugf("NewManager ")
+	fmt.Println("NewManager ")
 	clientOps := pulsar.ClientOptions{
 		URL:            s.URL,
 		Authentication: auth,
@@ -105,7 +104,7 @@ func getAuthentication(s *Settings) (auth pulsar.Authentication, err error) {
 	if err != nil {
 		return
 	}
-	log.Debugf("Pulsar getAuthentication keystoreDir: %s", keystoreDir)
+	fmt.Printf("Pulsar getAuthentication keystoreDir: %s\n", keystoreDir)
 	if keystoreDir == "" {
 		return nil, nil
 	}
@@ -117,7 +116,7 @@ func getAuthentication(s *Settings) (auth pulsar.Authentication, err error) {
 func createTempKeystoreDir(s *Settings) (keystoreDir string, err error) {
 	var certObj, keyObj map[string]interface{}
 	if s.CertFile == "" || s.KeyFile == "" {
-		log.Debugf("Pulsar::createTempKeystoreDir Have certFile and keyFile")
+		fmt.Println("Pulsar::createTempKeystoreDir Have certFile and keyFile")
 		return "", nil
 	}
 	err = json.Unmarshal([]byte(s.CertFile), &certObj)
@@ -149,7 +148,7 @@ func createTempKeystoreDir(s *Settings) (keystoreDir string, err error) {
 	if err != nil {
 		return
 	}
-	log.Debugf("Pulsar::createTempKeystoreDir Created folder %s", keystoreDir)
+	fmt.Printf("Pulsar::createTempKeystoreDir Created folder %s\n", keystoreDir)
 	return
 }
 
