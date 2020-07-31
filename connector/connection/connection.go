@@ -59,8 +59,9 @@ func (*Factory) NewManager(settings map[string]interface{}) (connection.Manager,
 	}
 	fmt.Println("NewManager ")
 	clientOps := pulsar.ClientOptions{
-		URL:            s.URL,
-		Authentication: auth,
+		URL:                 s.URL,
+		Authentication:      auth,
+		TLSValidateHostname: false,
 	}
 	client, err := pulsar.NewClient(clientOps)
 
