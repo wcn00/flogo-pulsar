@@ -16,3 +16,6 @@
 [submodule "vendor/github.com/k0kubun/go-ansi"]
 	path = vendor/github.com/k0kubun/go-ansi
 	url = https://github.com/k0kubun/go-ansi
+[submodule "vendor/github.com/klauspost/compress"]
+	path = vendor/github.com/klauspost/compress
+	url = https://github.com/klauspost/compress
