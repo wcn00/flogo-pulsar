@@ -31,3 +31,6 @@
 [submodule "vendor/github.com/spaolacci/murmur3"]
 	path = vendor/github.com/spaolacci/murmur3
 	url = https://github.com/spaolacci/murmur3
+[submodule "vendor/github.com/spf13/viper"]
+	path = vendor/github.com/spf13/viper
+	url = https://github.com/spf13/viper
