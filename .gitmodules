@@ -1,6 +1,3 @@
-[submodule "vendor/apache/pulsar-client-go"]
-	path = vendor/apache/pulsar-client-go
-	url = https://github.com/apache/pulsar-client-go
 [submodule "vendor/github.com/DataDog/zstd"]
 	path = vendor/github.com/DataDog/zstd
 	url = https://github.com/DataDog/zstd
