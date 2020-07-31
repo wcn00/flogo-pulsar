@@ -7,3 +7,12 @@
 [submodule "vendor/github.com/alecthomas/units"]
 	path = vendor/github.com/alecthomas/units
 	url = https://github.com/alecthomas/units
+[submodule "vendor/github.com/apache/pulsar-client-go"]
+	path = vendor/github.com/apache/pulsar-client-go
+	url = https://github.com/apache/pulsar-client-go
+[submodule "vendor/github.com/ardielle/ardielle-go"]
+	path = vendor/github.com/ardielle/ardielle-go
+	url = https://github.com/ardielle/ardielle-go
+[submodule "vendor/github.com/k0kubun/go-ansi"]
+	path = vendor/github.com/k0kubun/go-ansi
+	url = https://github.com/k0kubun/go-ansi
