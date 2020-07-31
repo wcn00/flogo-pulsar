@@ -34,3 +34,6 @@
 [submodule "vendor/github.com/spf13/viper"]
 	path = vendor/github.com/spf13/viper
 	url = https://github.com/spf13/viper
+[submodule "vendor/github.com/stretchr/objx"]
+	path = vendor/github.com/stretchr/objx
+	url = https://github.com/stretchr/objx
