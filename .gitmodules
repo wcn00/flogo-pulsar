@@ -25,3 +25,6 @@
 [submodule "vendor/github.com/linkedin/goavro"]
 	path = vendor/github.com/linkedin/goavro
 	url = https://github.com/linkedin/goavro
+[submodule "vendor/github.com/pierrec/lz4"]
+	path = vendor/github.com/pierrec/lz4
+	url = https://github.com/pierrec/lz4
