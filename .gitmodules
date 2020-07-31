@@ -37,3 +37,6 @@
 [submodule "vendor/github.com/stretchr/objx"]
 	path = vendor/github.com/stretchr/objx
 	url = https://github.com/stretchr/objx
+[submodule "vendor/github.com/xo/dburl"]
+	path = vendor/github.com/xo/dburl
+	url = https://github.com/xo/dburl
