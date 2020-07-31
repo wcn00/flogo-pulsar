@@ -22,3 +22,6 @@
 [submodule "vendor/github.com/lib/pq"]
 	path = vendor/github.com/lib/pq
 	url = https://github.com/lib/pq
+[submodule "vendor/github.com/linkedin/goavro"]
+	path = vendor/github.com/linkedin/goavro
+	url = https://github.com/linkedin/goavro
