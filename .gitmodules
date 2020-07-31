@@ -46,3 +46,6 @@
 [submodule "vendor/github.com/pmezard/go-difflib"]
 	path = vendor/github.com/pmezard/go-difflib
 	url = https://github.com/pmezard/go-difflib
+[submodule "vendor/github.com/valyala/gozstd"]
+	path = vendor/github.com/valyala/gozstd
+	url = https://github.com/valyala/gozstd
