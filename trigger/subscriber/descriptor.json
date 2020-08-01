@@ -8,7 +8,6 @@
 		{
 			"name": "connection",
 			"type": "connection",
-			"allowed": null,
 			"required": true
 		}
 	],
@@ -16,7 +15,6 @@
 		{
 			"name": "message",
 			"type": "string",
-			"allowed": null,
 			"required": false
 		}
 	],
@@ -25,14 +23,12 @@
 			{
 				"name": "topic",
 				"type": "string",
-				"allowed": null,
 				"required": true,
 				"value":"/tenant/namespace/topic"
 			},
 			{
 				"name": "subscription",
 				"type": "string",
-				"allowed": null,
 				"required": true,
 				"value":""
 			}
