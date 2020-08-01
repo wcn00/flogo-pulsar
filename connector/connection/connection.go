@@ -11,7 +11,10 @@ import (
 	"github.com/apache/pulsar-client-go/pulsar"
 	"github.com/project-flogo/core/data/metadata"
 	"github.com/project-flogo/core/support/connection"
+	"github.com/project-flogo/core/support/log"
 )
+
+var logger = log.RootLogger()
 
 func init() {
 	connection.RegisterManager("connection", &PulsarConnection{})
@@ -55,6 +58,8 @@ func (*Factory) NewManager(settings map[string]interface{}) (connection.Manager,
 	if err != nil {
 		return nil, err
 	}
+	logger.Debugf("Settings: %v", *s)
+
 	keystoreDir, auth, err := getAuthentication(s)
 	if err != nil {
 		return nil, err
@@ -65,6 +70,8 @@ func (*Factory) NewManager(settings map[string]interface{}) (connection.Manager,
 		TLSValidateHostname:        false,
 		TLSAllowInsecureConnection: s.AllowInsecure,
 	}
+	logger.Debugf("pulsar.ClientOptions: %v", clientOpts)
+
 	client, err := pulsar.NewClient(clientOpts)
 	if err != nil {
 		return nil, err
@@ -84,6 +91,7 @@ func (p *PulsarConnection) GetConnection() interface{} {
 
 // Stop comment
 func (p *PulsarConnection) Stop() error {
+	logger.Debugf("PulsarConnection.Stop()")
 	p.client.Close()
 	os.RemoveAll(p.keystoreDir)
 	return nil
@@ -91,10 +99,13 @@ func (p *PulsarConnection) Stop() error {
 
 // Start comment
 func (p *PulsarConnection) Start() (err error) {
+	logger.Debugf("PulsarConnection.Start()")
 	p.keystoreDir, _, err = getAuthentication(p.settings)
 	if err != nil {
 		return
 	}
+	logger.Debugf("PulsarConnection.Start KeystoreDir: %s", p.keystoreDir)
+
 	p.client, err = pulsar.NewClient(p.clientOpts)
 	return
 }
@@ -119,6 +130,8 @@ func getAuthentication(s *Settings) (keystoreDir string, auth pulsar.Authenticat
 
 func createTempKeystoreDir(s *Settings) (keystoreDir string, err error) {
 	var certObj, keyObj map[string]interface{}
+	logger.Debugf("createTempKeystoreDir:  %v", *s)
+
 	if s.CertFile == "" || s.KeyFile == "" {
 		return "", nil
 	}
