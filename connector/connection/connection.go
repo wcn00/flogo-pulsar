@@ -91,27 +91,28 @@ func (p *PulsarConnection) GetConnection() interface{} {
 
 // Stop comment
 func (p *PulsarConnection) Stop() error {
-	logger.Debugf("PulsarConnection.Stop()")
-	p.client.Close()
-	os.RemoveAll(p.keystoreDir)
+	// logger.Debugf("PulsarConnection.Stop()")
+	// p.client.Close()
+	// os.RemoveAll(p.keystoreDir)
 	return nil
 }
 
 // Start comment
 func (p *PulsarConnection) Start() (err error) {
 	logger.Debugf("PulsarConnection.Start()")
-	p.keystoreDir, _, err = getAuthentication(p.settings)
-	if err != nil {
-		return
-	}
-	logger.Debugf("PulsarConnection.Start KeystoreDir: %s", p.keystoreDir)
+	// p.keystoreDir, _, err = getAuthentication(p.settings)
+	// if err != nil {
+	// 	return
+	// }
+	// logger.Debugf("PulsarConnection.Start KeystoreDir: %s", p.keystoreDir)
 
-	p.client, err = pulsar.NewClient(p.clientOpts)
+	// p.client, err = pulsar.NewClient(p.clientOpts)
 	return
 }
 
 // ReleaseConnection comment
 func (p *PulsarConnection) ReleaseConnection(connection interface{}) {
+	logger.Debugf("PulsarConnection.ReleaseConnection()")
 	p.Stop()
 }
 
