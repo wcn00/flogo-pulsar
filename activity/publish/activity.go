@@ -75,6 +75,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 		return true, fmt.Errorf("Producer could not send message: %v", err)
 	}
 	ctx.SetOutput("msgid", fmt.Sprintf("%x", msgID.Serialize()))
-	logger.Debugf("publisher sent message ID: %x\n", msgID.Serialize())
+	logger.Debugf("publisher sent message ID: %x", msgID.Serialize())
+	logger.Debugf("publisher output context:  %v", ctx)
 	return true, nil
 }
