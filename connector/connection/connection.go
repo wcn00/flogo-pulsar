@@ -33,7 +33,10 @@ type Settings struct {
 
 // PulsarConnection comment
 type PulsarConnection struct {
-	client pulsar.Client
+	client      pulsar.Client
+	keystoreDir string
+	clientOpts  pulsar.ClientOptions
+	settings    *Settings
 }
 
 // Factory comment
@@ -56,22 +59,17 @@ func (*Factory) NewManager(settings map[string]interface{}) (connection.Manager,
 	if err != nil {
 		return nil, err
 	}
-	defer func() {
-		if keystoreDir != "" {
-			os.RemoveAll(keystoreDir)
-		}
-	}()
-	clientOps := pulsar.ClientOptions{
+	clientOpts := pulsar.ClientOptions{
 		URL:                        s.URL,
 		Authentication:             auth,
 		TLSValidateHostname:        false,
 		TLSAllowInsecureConnection: s.AllowInsecure,
 	}
-	client, err := pulsar.NewClient(clientOps)
+	client, err := pulsar.NewClient(clientOpts)
 	if err != nil {
 		return nil, err
 	}
-	return &PulsarConnection{client: client}, nil
+	return &PulsarConnection{client: client, keystoreDir: keystoreDir, clientOpts: clientOpts, settings: s}, nil
 }
 
 // Type comment
@@ -87,12 +85,18 @@ func (p *PulsarConnection) GetConnection() interface{} {
 // Stop comment
 func (p *PulsarConnection) Stop() error {
 	p.client.Close()
+	os.RemoveAll(p.keystoreDir)
 	return nil
 }
 
 // Start comment
-func (p *PulsarConnection) Start() error {
-	return nil
+func (p *PulsarConnection) Start() (err error) {
+	p.keystoreDir, _, err = getAuthentication(p.settings)
+	if err != nil {
+		return
+	}
+	p.client, err = pulsar.NewClient(p.clientOpts)
+	return
 }
 
 // ReleaseConnection comment
