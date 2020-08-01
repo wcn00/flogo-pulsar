@@ -49,3 +49,6 @@
 [submodule "vendor/github.com/valyala/gozstd"]
 	path = vendor/github.com/valyala/gozstd
 	url = https://github.com/valyala/gozstd
+[submodule "vendor/github.com/beefsack/go-rate"]
+	path = vendor/github.com/beefsack/go-rate
+	url = https://github.com/beefsack/go-rate
