@@ -26,3 +26,24 @@ func (r *Input) ToMap() map[string]interface{} {
 		"payload": r.Payload,
 	}
 }
+
+type Output struct {
+	msgid string `md:"msgid"`
+}
+
+func (o *Output) FromMap(values map[string]interface{}) error {
+
+	var err error
+	o.msgid, err = coerce.ToString(values["msgid"])
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *Output) ToMap() map[string]interface{} {
+	return map[string]interface{}{
+		"msgid": o.msgid,
+	}
+}
