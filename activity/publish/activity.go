@@ -8,7 +8,10 @@ import (
 	"github.com/project-flogo/core/activity"
 	"github.com/project-flogo/core/data/coerce"
 	"github.com/project-flogo/core/data/metadata"
+	"github.com/project-flogo/core/support/log"
 )
+
+var logger = log.ChildLogger(log.RootLogger(), "flogo-pulsar-publish")
 
 func init() {
 	_ = activity.Register(&Activity{}, New)
@@ -56,7 +59,7 @@ func (a *Activity) Metadata() *activity.Metadata {
 
 // Eval implements api.Activity.Eval - Logs the Message
 func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
-
+	logger.Debugf("publish eval called")
 	input := &Input{}
 	err = ctx.GetInputObject(input)
 	if err != nil {
@@ -72,6 +75,6 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 		return true, fmt.Errorf("Producer could not send message: %v", err)
 	}
 	ctx.SetOutput("msgid", fmt.Sprintf("%x", msgID.Serialize()))
-	fmt.Printf("PulsarActivity producer sent message ID: %x\n", msgID.Serialize())
+	logger.Debugf("publisher sent message ID: %x\n", msgID.Serialize())
 	return true, nil
 }
