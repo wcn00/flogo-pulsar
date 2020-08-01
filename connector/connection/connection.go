@@ -16,16 +16,16 @@ import (
 func init() {
 	connection.RegisterManager("connection", &PulsarConnection{})
 	connection.RegisterManagerFactory(&Factory{})
-	fmt.Println("registered conneciton ")
 }
 
 // Settings comment
 type Settings struct {
-	Name     string `md:"name,required"`
-	URL      string `md:"url,required"`
-	CaCert   string `md:"cacert"`
-	CertFile string `md:"certFile"`
-	KeyFile  string `md:"keyFile"`
+	Name          string `md:"name,required"`
+	URL           string `md:"url,required"`
+	CaCert        string `md:"cacert"`
+	CertFile      string `md:"certFile"`
+	KeyFile       string `md:"keyFile"`
+	AllowInsecure bool   `md:"allowinsecure"`
 }
 
 // JWTToken             string `md:"jwttoken"`
@@ -52,40 +52,41 @@ func (*Factory) NewManager(settings map[string]interface{}) (connection.Manager,
 	if err != nil {
 		return nil, err
 	}
-
-	auth, err := getAuthentication(s)
+	keystoreDir, auth, err := getAuthentication(s)
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println("NewManager ")
+	defer func() {
+		if keystoreDir != "" {
+			os.RemoveAll(keystoreDir)
+		}
+	}()
 	clientOps := pulsar.ClientOptions{
-		URL:                 s.URL,
-		Authentication:      auth,
-		TLSValidateHostname: false,
+		URL:                        s.URL,
+		Authentication:             auth,
+		TLSValidateHostname:        false,
+		TLSAllowInsecureConnection: s.AllowInsecure,
 	}
 	client, err := pulsar.NewClient(clientOps)
-
 	if err != nil {
 		return nil, err
 	}
-
 	return &PulsarConnection{client: client}, nil
 }
 
 // Type comment
 func (p *PulsarConnection) Type() string {
-
 	return "pulsar"
 }
 
 // GetConnection comment
 func (p *PulsarConnection) GetConnection() interface{} {
-
 	return p.client
 }
 
 // Stop comment
 func (p *PulsarConnection) Stop() error {
+	p.client.Close()
 	return nil
 }
 
@@ -96,18 +97,16 @@ func (p *PulsarConnection) Start() error {
 
 // ReleaseConnection comment
 func (p *PulsarConnection) ReleaseConnection(connection interface{}) {
-
+	p.Stop()
 }
 
-func getAuthentication(s *Settings) (auth pulsar.Authentication, err error) {
-
-	keystoreDir, err := createTempKeystoreDir(s)
+func getAuthentication(s *Settings) (keystoreDir string, auth pulsar.Authentication, err error) {
+	keystoreDir, err = createTempKeystoreDir(s)
 	if err != nil {
 		return
 	}
-	fmt.Printf("Pulsar getAuthentication keystoreDir: %s\n", keystoreDir)
 	if keystoreDir == "" {
-		return nil, nil
+		return "", nil, nil
 	}
 	auth = pulsar.NewAuthenticationTLS(keystoreDir+string(os.PathSeparator)+"certfile.pem",
 		keystoreDir+string(os.PathSeparator)+"keyfile.pem")
@@ -117,7 +116,6 @@ func getAuthentication(s *Settings) (auth pulsar.Authentication, err error) {
 func createTempKeystoreDir(s *Settings) (keystoreDir string, err error) {
 	var certObj, keyObj map[string]interface{}
 	if s.CertFile == "" || s.KeyFile == "" {
-		fmt.Println("Pulsar::createTempKeystoreDir Have certFile and keyFile")
 		return "", nil
 	}
 	err = json.Unmarshal([]byte(s.CertFile), &certObj)
@@ -128,7 +126,6 @@ func createTempKeystoreDir(s *Settings) (keystoreDir string, err error) {
 	if err != nil {
 		return
 	}
-
 	certBytes, err := getBytesFromFileSetting(certObj)
 	if err != nil {
 		return
@@ -149,7 +146,6 @@ func createTempKeystoreDir(s *Settings) (keystoreDir string, err error) {
 	if err != nil {
 		return
 	}
-	fmt.Printf("Pulsar::createTempKeystoreDir Created folder %s\n", keystoreDir)
 	return
 }
 

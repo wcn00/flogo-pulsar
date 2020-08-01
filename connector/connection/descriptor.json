@@ -37,6 +37,12 @@
 			"type": "string",
 			"required": false,
 			"value": ""
+		},
+		{
+			"name": "allowinsecure",
+			"type": "boolean",
+			"required": false,
+			"value": false
 		}
 	]
 }
