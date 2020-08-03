@@ -15,12 +15,19 @@
 			"required": true,
 			"type": "string",
 			"value": "/tenant/namespace/topic"
+		},
+		{
+			"name": "compressiontype",
+			"required": true,
+			"type": "string",
+			"allowed": ["LZ4","ZLIB","ZSTD"],
+			"value": "/tenant/namespace/topic"
 		}
 	],
 	"input": [
 		{
 			"name": "payload",
-			"type": "string",
+			"type": "any",
 			"required": false
 		}
 	],

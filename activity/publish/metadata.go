@@ -6,18 +6,19 @@ import (
 )
 
 type Settings struct {
-	Connection connection.Manager `md:"connection"`
-	Topic      string             `md:"topic,required"`
+	Connection      connection.Manager `md:"connection"`
+	Topic           string             `md:"topic,required"`
+	CompressionType string             `md:"compressiontype"`
 }
 
+// Input to the publish activity
 type Input struct {
-	Payload string `md:"payload,required"`
+	Payload interface{} `md:"payload,required"`
 }
 
 func (r *Input) FromMap(values map[string]interface{}) error {
 	var err error
-	r.Payload, err = coerce.ToString(values["payload"])
-
+	r.Payload, err = coerce.ToObject(values["payload"])
 	return err
 }
 
@@ -27,19 +28,17 @@ func (r *Input) ToMap() map[string]interface{} {
 	}
 }
 
+// Output of the publish activity
 type Output struct {
 	Msgid string `md:"msgid"`
 }
 
-func (o *Output) FromMap(values map[string]interface{}) error {
-
-	var err error
+func (o *Output) FromMap(values map[string]interface{}) err error {
 	o.Msgid, err = coerce.ToString(values["msgid"])
 	if err != nil {
-		return err
+		return
 	}
-
-	return nil
+	return
 }
 
 func (o *Output) ToMap() map[string]interface{} {
