@@ -21,13 +21,18 @@
 			"required": true,
 			"type": "string",
 			"allowed": ["LZ4","ZLIB","ZSTD"],
-			"value": "/tenant/namespace/topic"
+			"value": "ZLIB"
 		}
 	],
 	"input": [
 		{
-			"name": "payload",
-			"type": "any",
+			"name": "payloadStr",
+			"type": "string",
+			"required": false
+		},
+		{
+			"name": "payloadJSON",
+			"type": "object",
 			"required": false
 		}
 	],
