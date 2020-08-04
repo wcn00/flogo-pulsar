@@ -78,7 +78,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 		return true, err
 	}
 	msg := pulsar.ProducerMessage{
-		Payload: msgBytes.([]byte)
+		Payload: msgBytes.([]byte),
 	}
 	msgID, err := a.producer.Send(context.Background(), &msg)
 	if err != nil {
