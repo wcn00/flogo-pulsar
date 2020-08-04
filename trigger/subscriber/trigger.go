@@ -79,6 +79,13 @@ func (t *Trigger) Initialize(ctx trigger.InitContext) error {
 		case "KeyShared":
 			consumeroptions.Type = pulsar.KeyShared
 		}
+		if s.DLQTopic != "" {
+			policy := pulsar.DLQPolicy{
+				MaxDeliveries: uint32(s.DLQMaxDeliveries),
+				Topic:         s.DLQTopic,
+			}
+			consumeroptions.DLQ = &policy
+		}
 		consumer, err := t.client.Subscribe(consumeroptions)
 		if err != nil {
 			return err

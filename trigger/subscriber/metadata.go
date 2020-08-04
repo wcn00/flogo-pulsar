@@ -14,6 +14,8 @@ type HandlerSettings struct {
 	Subscription     string `md:"subscription,required"`
 	SubscriptionType string `md:"subscriptiontype"`
 	InitialPosition  string `md:"initialposition"`
+	DLQMaxDeliveries int    `md:"dlqmaxdeliveries"`
+	DLQTopic         string `md:"dlqtopic"`
 }
 
 type Output struct {

@@ -45,6 +45,18 @@
 				"required": true,
 				"allowed":["Latest","Earliest"],
 				"value":"Latest"
+			},
+			{
+				"name": "dlqmaxdeliveries",
+				"type": "int",
+				"required": false,
+				"value":"10"
+			},
+			{
+				"name": "dlqtopic",
+				"type": "string",
+				"required": false,
+				"value":""
 			}
 		]
 	}
