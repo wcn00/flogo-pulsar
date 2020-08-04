@@ -6,6 +6,7 @@ import (
 
 	"github.com/apache/pulsar-client-go/pulsar"
 	"github.com/project-flogo/core/activity"
+	"github.com/project-flogo/core/data"
 	"github.com/project-flogo/core/data/coerce"
 	"github.com/project-flogo/core/data/metadata"
 	"github.com/project-flogo/core/support/log"
@@ -72,8 +73,12 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	if err != nil {
 		return true, err
 	}
+	msgBytes, err := coerce.ToType(input.Payload, data.TypeBytes)
+	if err != nil {
+		return true, err
+	}
 	msg := pulsar.ProducerMessage{
-		Payload: []byte(data.ToType(input.Payload, data.TypeBytes)),
+		Payload: msgBytes.([]byte)
 	}
 	msgID, err := a.producer.Send(context.Background(), &msg)
 	if err != nil {
