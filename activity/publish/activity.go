@@ -31,10 +31,22 @@ func New(ctx activity.InitContext) (act activity.Activity, err error) {
 		return
 	}
 	pulsarClient := connManager.GetConnection().(pulsar.Client)
-	producer, err := pulsarClient.CreateProducer(pulsar.ProducerOptions{
-		Topic:           ctx.Settings()["topic"].(string),
-		CompressionType: ctx.Settings()["compressiontype"].(string),
-	})
+
+	producerOptions := pulsar.ProducerOptions{
+		Topic: ctx.Settings()["topic"].(string),
+	}
+	switch ctx.Settings()["compressiontype"].(string) {
+	case ("LZ4"):
+		producerOptions.CompressionType = pulsar.LZ4
+	case ("ZLIB"):
+		producerOptions.CompressionType = pulsar.ZLib
+	case ("ZSTD"):
+		producerOptions.CompressionType = pulsar.ZSTD
+	default:
+		producerOptions.CompressionType = pulsar.NoCompression
+	}
+
+	producer, err := pulsarClient.CreateProducer(producerOptions)
 	if err != nil {
 		return nil, fmt.Errorf("Could not instantiate Pulsar producer: %v", err)
 	}

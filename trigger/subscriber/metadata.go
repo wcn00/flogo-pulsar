@@ -10,8 +10,10 @@ type Settings struct {
 }
 
 type HandlerSettings struct {
-	Topic        string `md:"topic,required"`
-	Subscription string `md:"subscription,required"`
+	Topic            string `md:"topic,required"`
+	Subscription     string `md:"subscription,required"`
+	SubscriptionType string `md:"subscriptiontype"`
+	InitialPosition  string `md:"initialposition"`
 }
 
 type Output struct {

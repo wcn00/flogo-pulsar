@@ -20,8 +20,8 @@
 			"name": "compressiontype",
 			"required": true,
 			"type": "string",
-			"allowed": ["LZ4","ZLIB","ZSTD"],
-			"value": "ZLIB"
+			"allowed": ["NONE","LZ4","ZLIB","ZSTD"],
+			"value": "NONE"
 		}
 	],
 	"input": [
