@@ -73,12 +73,13 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	if err != nil {
 		return true, err
 	}
+	logger.Debugf("publish payload: %s", input.Payload)
+
 	msgBytes, err := coerce.ToType(input.Payload, data.TypeBytes)
 	if err != nil {
 		return true, err
 	}
-	logger.Debugf("publish payload: %s", msgBytes.(string))
-
+	logger.Debugf("publish payload: %x", msgBytes)
 	msg := pulsar.ProducerMessage{
 		Payload: msgBytes.([]byte),
 	}
