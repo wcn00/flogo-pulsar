@@ -60,10 +60,13 @@ func (*Factory) NewManager(settings map[string]interface{}) (connection.Manager,
 		return nil, err
 	}
 	var auth pulsar.Authentication
-	var keystoreDir string
-	logger.Debugf("Settings: %v", *s)
+	keystoreDir, err := createTempKeystoreDir(s)
+	if err != nil {
+		return nil, err
+	}
+
 	if s.Auth == "TLS" {
-		keystoreDir, auth, err = getTLSAuthentication(s)
+		auth, err = getTLSAuthentication(keystoreDir, s)
 		if err != nil {
 			return nil, err
 		}
@@ -73,7 +76,9 @@ func (*Factory) NewManager(settings map[string]interface{}) (connection.Manager,
 		Authentication:             auth,
 		TLSValidateHostname:        false,
 		TLSAllowInsecureConnection: s.AllowInsecure,
-		TLSTrustCertsFilePath:      s.CaCert,
+	}
+	if strings.Index(s.URL, "pulsar+ssl") >= 0 {
+		clientOpts.TLSTrustCertsFilePath = keystoreDir + string(os.PathSeparator) + "cacert.pem"
 	}
 	logger.Debugf("pulsar.ClientOptions: %v", clientOpts)
 
@@ -121,14 +126,7 @@ func (p *PulsarConnection) ReleaseConnection(connection interface{}) {
 	p.Stop()
 }
 
-func getTLSAuthentication(s *Settings) (keystoreDir string, auth pulsar.Authentication, err error) {
-	keystoreDir, err = createTempKeystoreDir(s)
-	if err != nil {
-		return
-	}
-	if keystoreDir == "" {
-		return "", nil, nil
-	}
+func getTLSAuthentication(keystoreDir string, s *Settings) (auth pulsar.Authentication, err error) {
 	auth = pulsar.NewAuthenticationTLS(keystoreDir+string(os.PathSeparator)+"certfile.pem",
 		keystoreDir+string(os.PathSeparator)+"keyfile.pem")
 	return
@@ -136,38 +134,59 @@ func getTLSAuthentication(s *Settings) (keystoreDir string, auth pulsar.Authenti
 
 func createTempKeystoreDir(s *Settings) (keystoreDir string, err error) {
 	var certObj, keyObj map[string]interface{}
-	logger.Debugf("createTempKeystoreDir:  %v", *s)
-
-	if s.CertFile == "" || s.KeyFile == "" {
+	logger.Debugf("createTempCertificateDir:  %v", *s)
+	if s.CertFile != "" || s.KeyFile != "" || s.CaCert != "" {
+		keystoreDir, err = ioutil.TempDir(os.TempDir(), s.Name)
+		if err != nil {
+			return
+		}
+	} else {
 		return "", nil
 	}
-	err = json.Unmarshal([]byte(s.CertFile), &certObj)
-	if err != nil {
-		return
+	if s.CaCert != "" {
+		err = json.Unmarshal([]byte(s.CaCert), &certObj)
+		if err != nil {
+			return
+		}
+		var certBytes []byte
+		certBytes, err = getBytesFromFileSetting(certObj)
+		if err != nil {
+			return
+		}
+		err = ioutil.WriteFile(keystoreDir+string(os.PathSeparator)+"cacert.pem", certBytes, 0644)
+		if err != nil {
+			return
+		}
 	}
-	err = json.Unmarshal([]byte(s.KeyFile), &keyObj)
-	if err != nil {
-		return
+	if s.CertFile != "" {
+		err = json.Unmarshal([]byte(s.CertFile), &certObj)
+		if err != nil {
+			return
+		}
+		var certBytes []byte
+		certBytes, err = getBytesFromFileSetting(certObj)
+		if err != nil {
+			return
+		}
+		err = ioutil.WriteFile(keystoreDir+string(os.PathSeparator)+"certfile.pem", certBytes, 0644)
+		if err != nil {
+			return
+		}
 	}
-	certBytes, err := getBytesFromFileSetting(certObj)
-	if err != nil {
-		return
-	}
-	keyBytes, err := getBytesFromFileSetting(keyObj)
-	if err != nil {
-		return
-	}
-	keystoreDir, err = ioutil.TempDir(os.TempDir(), s.Name)
-	if err != nil {
-		return
-	}
-	err = ioutil.WriteFile(keystoreDir+string(os.PathSeparator)+"certfile.pem", certBytes, 0644)
-	if err != nil {
-		return
-	}
-	err = ioutil.WriteFile(keystoreDir+string(os.PathSeparator)+"keyfile.pem", keyBytes, 0644)
-	if err != nil {
-		return
+	if s.KeyFile != "" {
+		err = json.Unmarshal([]byte(s.KeyFile), &keyObj)
+		if err != nil {
+			return
+		}
+		var keyBytes []byte
+		keyBytes, err = getBytesFromFileSetting(keyObj)
+		if err != nil {
+			return
+		}
+		err = ioutil.WriteFile(keystoreDir+string(os.PathSeparator)+"keyfile.pem", keyBytes, 0644)
+		if err != nil {
+			return
+		}
 	}
 	return
 }
