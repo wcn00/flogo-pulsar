@@ -50,6 +50,12 @@
 			"type": "string",
 			"required": false,
 			"value": ""
+		},
+		{
+			"name": "jwt",
+			"type": "string",
+			"required": false,
+			"value": ""
 		}
 	]
 }
