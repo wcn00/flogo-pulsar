@@ -29,6 +29,7 @@ type Settings struct {
 	Auth          string `md:"auth"`
 	CertFile      string `md:"certFile"`
 	KeyFile       string `md:"keyFile"`
+	JWT           string `md:"jwt"`
 	AllowInsecure bool   `md:"allowinsecure"`
 }
 
@@ -67,6 +68,11 @@ func (*Factory) NewManager(settings map[string]interface{}) (connection.Manager,
 
 	if s.Auth == "TLS" {
 		auth, err = getTLSAuthentication(keystoreDir, s)
+		if err != nil {
+			return nil, err
+		}
+	} else if s.Auth == "JWT" {
+		auth, err = getJWTAuthentication(s)
 		if err != nil {
 			return nil, err
 		}
@@ -129,6 +135,10 @@ func (p *PulsarConnection) ReleaseConnection(connection interface{}) {
 func getTLSAuthentication(keystoreDir string, s *Settings) (auth pulsar.Authentication, err error) {
 	auth = pulsar.NewAuthenticationTLS(keystoreDir+string(os.PathSeparator)+"certfile.pem",
 		keystoreDir+string(os.PathSeparator)+"keyfile.pem")
+	return
+}
+func getJWTAuthentication(s *Settings) (auth pulsar.Authentication, err error) {
+	auth = pulsar.NewAuthenticationToken(s.JWT)
 	return
 }
 
