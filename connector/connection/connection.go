@@ -33,7 +33,6 @@ type Settings struct {
 	AllowInsecure bool   `md:"allowinsecure"`
 }
 
-// JWTToken             string `md:"jwttoken"`
 // AthenzAuthentication string `md:"athenzauth"`
 
 // PulsarConnection comment
@@ -143,7 +142,7 @@ func getJWTAuthentication(s *Settings) (auth pulsar.Authentication, err error) {
 }
 
 func createTempKeystoreDir(s *Settings) (keystoreDir string, err error) {
-	var certObj, keyObj map[string]interface{}
+	var certObj, keyObj, cacertObj map[string]interface{}
 	logger.Debugf("createTempCertificateDir:  %v", *s)
 	if s.CertFile != "" || s.KeyFile != "" || s.CaCert != "" {
 		keystoreDir, err = ioutil.TempDir(os.TempDir(), s.Name)
@@ -154,18 +153,20 @@ func createTempKeystoreDir(s *Settings) (keystoreDir string, err error) {
 		return "", nil
 	}
 	if s.CaCert != "" {
-		err = json.Unmarshal([]byte(s.CaCert), &certObj)
+		err = json.Unmarshal([]byte(s.CaCert), &cacertObj)
 		if err != nil {
 			return
 		}
 		var certBytes []byte
-		certBytes, err = getBytesFromFileSetting(certObj)
+		certBytes, err = getBytesFromFileSetting(cacertObj)
 		if err != nil {
 			return
 		}
-		err = ioutil.WriteFile(keystoreDir+string(os.PathSeparator)+"cacert.pem", certBytes, 0644)
-		if err != nil {
-			return
+		if certBytes != nil {
+			err = ioutil.WriteFile(keystoreDir+string(os.PathSeparator)+"cacert.pem", certBytes, 0644)
+			if err != nil {
+				return
+			}
 		}
 	}
 	if s.CertFile != "" {
@@ -178,9 +179,11 @@ func createTempKeystoreDir(s *Settings) (keystoreDir string, err error) {
 		if err != nil {
 			return
 		}
-		err = ioutil.WriteFile(keystoreDir+string(os.PathSeparator)+"certfile.pem", certBytes, 0644)
-		if err != nil {
-			return
+		if certBytes != nil {
+			err = ioutil.WriteFile(keystoreDir+string(os.PathSeparator)+"certfile.pem", certBytes, 0644)
+			if err != nil {
+				return
+			}
 		}
 	}
 	if s.KeyFile != "" {
@@ -193,9 +196,11 @@ func createTempKeystoreDir(s *Settings) (keystoreDir string, err error) {
 		if err != nil {
 			return
 		}
-		err = ioutil.WriteFile(keystoreDir+string(os.PathSeparator)+"keyfile.pem", keyBytes, 0644)
-		if err != nil {
-			return
+		if keyBytes != nil {
+			err = ioutil.WriteFile(keystoreDir+string(os.PathSeparator)+"keyfile.pem", keyBytes, 0644)
+			if err != nil {
+				return
+			}
 		}
 	}
 	return
@@ -205,7 +210,7 @@ func getBytesFromFileSetting(fileSetting map[string]interface{}) (destArray []by
 	var header = "base64,"
 	value := fileSetting["content"].(string)
 	if value == "" {
-		return nil, fmt.Errorf("file based setting contains no data")
+		return nil, nil
 	}
 
 	if strings.Index(value, header) >= 0 {
