@@ -21,18 +21,6 @@
 			"value": "pulsar[+ssl]://localhost:6650"
 		},
 		{
-			"name": "certFile",
-			"type": "string",
-			"required": false,
-			"value": ""
-		},
-		{
-			"name": "keyFile",
-			"type": "string",
-			"required": false,
-			"value": ""
-		},
-		{
 			"name": "cacert",
 			"type": "string",
 			"required": false,
@@ -43,6 +31,25 @@
 			"type": "boolean",
 			"required": true,
 			"value": false
+		},
+		{
+			"name": "auth",
+			"type": "string",
+			"required": true,
+			"value": "None",
+			"allowed": ["None","TLS","JWT"]
+		},
+		{
+			"name": "certFile",
+			"type": "string",
+			"required": false,
+			"value": ""
+		},
+		{
+			"name": "keyFile",
+			"type": "string",
+			"required": false,
+			"value": ""
 		}
 	]
 }

@@ -26,6 +26,7 @@ type Settings struct {
 	Name          string `md:"name,required"`
 	URL           string `md:"url,required"`
 	CaCert        string `md:"cacert"`
+	Auth          string `md:"auth"`
 	CertFile      string `md:"certFile"`
 	KeyFile       string `md:"keyFile"`
 	AllowInsecure bool   `md:"allowinsecure"`
@@ -58,17 +59,21 @@ func (*Factory) NewManager(settings map[string]interface{}) (connection.Manager,
 	if err != nil {
 		return nil, err
 	}
+	var auth pulsar.Authentication
+	var keystoreDir string
 	logger.Debugf("Settings: %v", *s)
-
-	keystoreDir, auth, err := getAuthentication(s)
-	if err != nil {
-		return nil, err
+	if s.Auth == "TLS" {
+		keystoreDir, auth, err = getTLSAuthentication(s)
+		if err != nil {
+			return nil, err
+		}
 	}
 	clientOpts := pulsar.ClientOptions{
 		URL:                        s.URL,
 		Authentication:             auth,
 		TLSValidateHostname:        false,
 		TLSAllowInsecureConnection: s.AllowInsecure,
+		TLSTrustCertsFilePath:      s.CaCert,
 	}
 	logger.Debugf("pulsar.ClientOptions: %v", clientOpts)
 
@@ -116,7 +121,7 @@ func (p *PulsarConnection) ReleaseConnection(connection interface{}) {
 	p.Stop()
 }
 
-func getAuthentication(s *Settings) (keystoreDir string, auth pulsar.Authentication, err error) {
+func getTLSAuthentication(s *Settings) (keystoreDir string, auth pulsar.Authentication, err error) {
 	keystoreDir, err = createTempKeystoreDir(s)
 	if err != nil {
 		return
