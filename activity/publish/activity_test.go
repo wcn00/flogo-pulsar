@@ -10,7 +10,7 @@ import (
 	"github.com/project-flogo/core/data/resolve"
 	"github.com/project-flogo/core/support/test"
 	"github.com/stretchr/testify/assert"
-	"github.com/wcn00/flogo-pulsar/connection"
+	"github.com/wcn00/flogo-pulsar/connector/connection"
 )
 
 var pulsarConGilJSON = []byte(`{
@@ -21,7 +21,7 @@ var pulsarConGilJSON = []byte(`{
 		"settings": {
 			"name": "TestConnectionToGil",
 			"description": "TestConnectionToGil",
-			"url": "pulsar://gil:6650"
+			"url": "pulsar://pulsar1.wcn.org:6650"
 		}
 	}
 }
@@ -48,12 +48,13 @@ func TestEval(t *testing.T) {
 	settings := make(map[string]interface{})
 	settings["connection"] = pulsConn
 	settings["topic"] = "wcntopic"
+	settings["compressiontype"] = "NONE"
 	mf := mapper.NewFactory(resolve.GetBasicResolver())
 	iCtx := test.NewActivityInitContext(settings, mf)
 	act, err := New(iCtx)
 	assert.Nil(t, err)
 	tc := test.NewActivityContext(act.Metadata())
-	tc.SetInput("payload", "mary had a little lamb")
+	tc.SetInput("payloadStr", "mary had a little lamb")
 	_, err = act.Eval(tc)
 	assert.Nil(t, err)
 	msgid := tc.GetOutput("msgid")
