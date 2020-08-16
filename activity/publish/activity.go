@@ -85,7 +85,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 			return true, err
 		}
 	}
-	var props map[string]strign
+	var props interface{}
 	if input.Properties != nil {
 		props, err = coerce.ToType(input.Properties, data.TypeParams)
 		if err != nil {
@@ -95,8 +95,9 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	}
 	msg := pulsar.ProducerMessage{
 		Payload:    msgBytes.([]byte),
-		Properties: props,
+		Properties: props.(map[string]string),
 	}
+
 	msgID, err := a.producer.Send(context.Background(), &msg)
 	if err != nil {
 		return true, fmt.Errorf("Producer could not send message: %v", err)
