@@ -85,17 +85,24 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 			return true, err
 		}
 	}
-	var props interface{}
+	msg := pulsar.ProducerMessage{
+		Payload: msgBytes.([]byte),
+	}
 	if input.Properties != nil {
-		props, err = coerce.ToType(input.Properties, data.TypeParams)
+		props, err := coerce.ToType(input.Properties, data.TypeParams)
 		if err != nil {
 			return true, err
 		}
 		logger.Debugf("publish payload properties: %v", input.Properties)
+		msg.Properties = props.(map[string]string)
 	}
-	msg := pulsar.ProducerMessage{
-		Payload:    msgBytes.([]byte),
-		Properties: props.(map[string]string),
+	if input.Key != "" {
+		logger.Debugf("publish payload key: %s", input.Key)
+		keyStr, err := coerce.ToType(input.Key, data.TypeString)
+		if err != nil {
+			return true, err
+		}
+		msg.Key = keyStr.(string)
 	}
 
 	msgID, err := a.producer.Send(context.Background(), &msg)

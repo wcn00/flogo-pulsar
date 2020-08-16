@@ -13,6 +13,16 @@
 	],
 	"output": [
 		{
+			"name": "key",
+			"type": "string",
+			"required": false
+		},
+		{
+			"name": "properties",
+			"type": "params",
+			"required": false
+		},
+		{
 			"name": "message",
 			"type": "string",
 			"required": false

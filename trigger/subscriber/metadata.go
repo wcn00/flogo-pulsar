@@ -22,7 +22,9 @@ type HandlerSettings struct {
 
 //Output for this trigger
 type Output struct {
-	Message string `md:"message"`
+	Key        string            `md:"key"`
+	Properties map[string]string `md:"properties"`
+	Message    string            `md:"message"`
 }
 
 //FromMap from Metadata interface
@@ -33,6 +35,14 @@ func (o *Output) FromMap(values map[string]interface{}) error {
 	if err != nil {
 		return err
 	}
+	o.Key, err = coerce.ToString(values["key"])
+	if err != nil {
+		return err
+	}
+	o.Properties, err = coerce.ToParams(values["properties"])
+	if err != nil {
+		return err
+	}
 
 	return nil
 }
@@ -40,6 +50,8 @@ func (o *Output) FromMap(values map[string]interface{}) error {
 //ToMap from Metadata interface
 func (o *Output) ToMap() map[string]interface{} {
 	return map[string]interface{}{
-		"message": o.Message,
+		"message":    o.Message,
+		"key":        o.Key,
+		"properties": o.Properties,
 	}
 }

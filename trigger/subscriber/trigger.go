@@ -16,16 +16,20 @@ func init() {
 	_ = trigger.Register(&Trigger{}, &Factory{})
 }
 
+//Trigger interface type
 type Trigger struct {
 	client   pulsar.Client
 	handlers []*Handler
 }
+
+//Handler interface type
 type Handler struct {
 	handler  trigger.Handler
 	consumer pulsar.Consumer
 	running  bool
 }
 
+//Factory interface type
 type Factory struct {
 }
 
@@ -126,6 +130,8 @@ func consume(handler *Handler) {
 		}
 		out := &Output{}
 		out.Message = string(msg.Payload())
+		out.Key = msg.Key()
+		out.Properties = msg.Properties()
 		// Do something with the message
 		_, err = handler.handler.Handle(context.Background(), out)
 		if err == nil {
