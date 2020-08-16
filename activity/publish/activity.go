@@ -79,16 +79,23 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 		if err != nil {
 			return true, err
 		}
-		logger.Debugf("publish payload strig: %s", input.PayloadStr.(string))
 	} else if input.PayloadJSON != nil {
 		msgBytes, err = coerce.ToType(input.PayloadJSON, data.TypeBytes)
 		if err != nil {
 			return true, err
 		}
-		logger.Debugf("publish payload strig: %v", input.PayloadJSON)
+	}
+	var props map[string]strign
+	if input.Properties != nil {
+		props, err = coerce.ToType(input.Properties, data.TypeParams)
+		if err != nil {
+			return true, err
+		}
+		logger.Debugf("publish payload properties: %v", input.Properties)
 	}
 	msg := pulsar.ProducerMessage{
-		Payload: msgBytes.([]byte),
+		Payload:    msgBytes.([]byte),
+		Properties: props,
 	}
 	msgID, err := a.producer.Send(context.Background(), &msg)
 	if err != nil {
