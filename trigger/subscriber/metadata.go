@@ -5,10 +5,12 @@ import (
 	"github.com/project-flogo/core/support/connection"
 )
 
+//Settings from Metadata interface
 type Settings struct {
 	Connection connection.Manager `md:"connection,required"`
 }
 
+//HandlerSettings for this trigger
 type HandlerSettings struct {
 	Topic            string `md:"topic,required"`
 	Subscription     string `md:"subscription,required"`
@@ -18,10 +20,12 @@ type HandlerSettings struct {
 	DLQTopic         string `md:"dlqtopic"`
 }
 
+//Output for this trigger
 type Output struct {
 	Message string `md:"message"`
 }
 
+//FromMap from Metadata interface
 func (o *Output) FromMap(values map[string]interface{}) error {
 
 	var err error
@@ -33,6 +37,7 @@ func (o *Output) FromMap(values map[string]interface{}) error {
 	return nil
 }
 
+//ToMap from Metadata interface
 func (o *Output) ToMap() map[string]interface{} {
 	return map[string]interface{}{
 		"message": o.Message,

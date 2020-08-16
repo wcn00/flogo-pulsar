@@ -14,12 +14,17 @@ type Settings struct {
 
 // Input to the publish activity
 type Input struct {
-	PayloadStr  interface{} `md:"payloadStr"`
-	PayloadJSON interface{} `md:"payloadJSON"`
+	Properties  map[string]string `md:"properties"`
+	PayloadStr  interface{}       `md:"payloadStr"`
+	PayloadJSON interface{}       `md:"payloadJSON"`
 }
 
 // FromMap frommap
 func (r *Input) FromMap(values map[string]interface{}) (err error) {
+	r.Properties, err = coerce.ToParams(values["properties"])
+	if err != nil {
+		return err
+	}
 	r.PayloadStr, err = coerce.ToString(values["payloadStr"])
 	if err != nil {
 		return
@@ -34,6 +39,7 @@ func (r *Input) FromMap(values map[string]interface{}) (err error) {
 // ToMap tomap
 func (r *Input) ToMap() map[string]interface{} {
 	return map[string]interface{}{
+		"properties":  r.Properties,
 		"payloadStr":  r.PayloadStr,
 		"payloadJSON": r.PayloadJSON,
 	}

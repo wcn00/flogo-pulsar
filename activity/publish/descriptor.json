@@ -26,6 +26,11 @@
 	],
 	"input": [
 		{
+			"name": "properties",
+			"type": "params",
+			"description": "The message properties expressed as name:value pairs"
+		},
+		{
 			"name": "payloadStr",
 			"type": "string",
 			"required": false

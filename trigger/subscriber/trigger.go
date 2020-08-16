@@ -86,6 +86,11 @@ func (t *Trigger) Initialize(ctx trigger.InitContext) error {
 			}
 			consumeroptions.DLQ = &policy
 		}
+		if s.InitialPosition == "Latest" {
+			consumeroptions.SubscriptionInitialPosition = pulsar.SubscriptionPositionLatest
+		} else {
+			consumeroptions.SubscriptionInitialPosition = pulsar.SubscriptionPositionEarliest
+		}
 		consumer, err := t.client.Subscribe(consumeroptions)
 		if err != nil {
 			return err
@@ -121,10 +126,8 @@ func consume(handler *Handler) {
 		}
 		out := &Output{}
 		out.Message = string(msg.Payload())
-		logger.Debugf("Message recieved [%v]", out.Message)
 		// Do something with the message
 		_, err = handler.handler.Handle(context.Background(), out)
-
 		if err == nil {
 			// Message processed successfully
 			handler.consumer.Ack(msg)
