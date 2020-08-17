@@ -1,6 +1,8 @@
 package subscriber
 
 import (
+	"fmt"
+
 	"github.com/project-flogo/core/data/coerce"
 	"github.com/project-flogo/core/support/connection"
 )
@@ -40,6 +42,7 @@ func (o *Output) FromMap(values map[string]interface{}) error {
 	if err != nil {
 		return err
 	}
+	fmt.Printf("messageObj: %v \n", o.MessageObj)
 	o.Key, err = coerce.ToString(values["key"])
 	if err != nil {
 		return err
