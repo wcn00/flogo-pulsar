@@ -16,8 +16,8 @@ type Settings struct {
 type Input struct {
 	Key         interface{}       `md:"key"`
 	Properties  map[string]string `md:"properties"`
-	PayloadStr  interface{}       `md:"payloadStr"`
-	PayloadJSON interface{}       `md:"payloadJSON"`
+	PayloadStr  interface{}       `md:"message"`
+	PayloadJSON interface{}       `md:"messageObj"`
 }
 
 // FromMap frommap
@@ -30,11 +30,11 @@ func (r *Input) FromMap(values map[string]interface{}) (err error) {
 	if err != nil {
 		return err
 	}
-	r.PayloadStr, err = coerce.ToString(values["payloadStr"])
+	r.PayloadStr, err = coerce.ToString(values["message"])
 	if err != nil {
 		return
 	}
-	r.PayloadJSON, err = coerce.ToObject(values["payloadJSON"])
+	r.PayloadJSON, err = coerce.ToObject(values["messageObj"])
 	if err != nil {
 		return
 	}
@@ -44,10 +44,10 @@ func (r *Input) FromMap(values map[string]interface{}) (err error) {
 // ToMap tomap
 func (r *Input) ToMap() map[string]interface{} {
 	return map[string]interface{}{
-		"key":         r.Key,
-		"properties":  r.Properties,
-		"payloadStr":  r.PayloadStr,
-		"payloadJSON": r.PayloadJSON,
+		"key":        r.Key,
+		"properties": r.Properties,
+		"message":    r.PayloadStr,
+		"messageObj": r.PayloadJSON,
 	}
 }
 

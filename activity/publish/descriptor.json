@@ -11,6 +11,13 @@
 			"required": true
 		},
 		{
+			"name": "format",
+			"type": "string",
+			"required": true,
+			"allowed":["String","JSON"],
+			"value":"String"
+		},
+		{
 			"name": "topic",
 			"required": true,
 			"type": "string",
@@ -37,12 +44,12 @@
 			"required": false
 		},
 		{
-			"name": "payloadStr",
+			"name": "message",
 			"type": "string",
 			"required": false
 		},
 		{
-			"name": "payloadJSON",
+			"name": "messageObj",
 			"type": "object",
 			"required": false
 		}
