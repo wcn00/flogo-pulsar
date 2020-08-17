@@ -25,6 +25,7 @@ type Output struct {
 	Key        string            `md:"key"`
 	Properties map[string]string `md:"properties"`
 	Message    string            `md:"message"`
+	MessageObj interface{}       `md:"messageObj"`
 }
 
 //FromMap from Metadata interface
@@ -32,6 +33,10 @@ func (o *Output) FromMap(values map[string]interface{}) error {
 
 	var err error
 	o.Message, err = coerce.ToString(values["message"])
+	if err != nil {
+		return err
+	}
+	o.MessageObj, err = coerce.ToObject(values["messageObj"])
 	if err != nil {
 		return err
 	}
@@ -51,6 +56,7 @@ func (o *Output) FromMap(values map[string]interface{}) error {
 func (o *Output) ToMap() map[string]interface{} {
 	return map[string]interface{}{
 		"message":    o.Message,
+		"messageObj": o.MessageObj,
 		"key":        o.Key,
 		"properties": o.Properties,
 	}

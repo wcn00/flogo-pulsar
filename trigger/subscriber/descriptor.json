@@ -9,6 +9,13 @@
 			"name": "connection",
 			"type": "connection",
 			"required": true
+		},
+		{
+			"name": "format",
+			"type": "string",
+			"required": true,
+			"allowed":["String","JSON"],
+			"value":"String"
 		}
 	],
 	"output": [
@@ -25,6 +32,11 @@
 		{
 			"name": "message",
 			"type": "string",
+			"required": false
+		},
+		{
+			"name": "messageObj",
+			"type": "object",
 			"required": false
 		}
 	],

@@ -2,6 +2,7 @@ package subscriber
 
 import (
 	"context"
+	"encoding/json"
 
 	"github.com/apache/pulsar-client-go/pulsar"
 	"github.com/project-flogo/core/data/coerce"
@@ -123,13 +124,23 @@ func (t *Trigger) Stop() error {
 
 func consume(handler *Handler) {
 	for {
+		var err error
 		msg, err := handler.consumer.Receive(context.Background())
 		if err != nil {
 			logger.Debugf("Error while recieveing message")
 			return
 		}
 		out := &Output{}
-		out.Message = string(msg.Payload())
+		if handler.handler.Settings()["format"] != nil &&
+			handler.handler.Settings()["format"].(string) == "JSON" {
+			var obj interface{}
+			err = json.Unmarshal(msg.Payload(), &obj)
+			if err != nil {
+				out.MessageObj = obj
+			}
+		} else {
+			out.Message = string(msg.Payload())
+		}
 		out.Key = msg.Key()
 		out.Properties = msg.Properties()
 		// Do something with the message
