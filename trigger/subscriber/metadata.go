@@ -36,11 +36,9 @@ func (o *Output) FromMap(values map[string]interface{}) error {
 		return err
 	}
 	o.MessageObj, err = coerce.ToObject(values["messageObj"])
-	logger.Errorf("messageObjA: %v ", values["messageObj"])
 	if err != nil {
 		return err
 	}
-	logger.Errorf("messageObjB: %v", o.MessageObj)
 	o.Key, err = coerce.ToString(values["key"])
 	if err != nil {
 		return err
@@ -55,6 +53,7 @@ func (o *Output) FromMap(values map[string]interface{}) error {
 
 //ToMap from Metadata interface
 func (o *Output) ToMap() map[string]interface{} {
+	logger.Errorf("Trigger.ToMap  output.messageobj: %v", o.MessageObj)
 	return map[string]interface{}{
 		"message":    o.Message,
 		"messageObj": o.MessageObj,
