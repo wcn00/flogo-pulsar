@@ -3,10 +3,7 @@ package subscriber
 import (
 	"github.com/project-flogo/core/data/coerce"
 	"github.com/project-flogo/core/support/connection"
-	"github.com/project-flogo/core/support/log"
 )
-
-var logger log.Logger
 
 //Settings from Metadata interface
 type Settings struct {
@@ -29,11 +26,6 @@ type Output struct {
 	Properties map[string]string `md:"properties"`
 	Message    string            `md:"message"`
 	MessageObj interface{}       `md:"messageObj"`
-}
-
-func init() {
-	logger = log.RootLogger()
-
 }
 
 //FromMap from Metadata interface
