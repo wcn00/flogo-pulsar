@@ -6,6 +6,8 @@ import (
 	"github.com/project-flogo/core/support/log"
 )
 
+var logger log.Logger
+
 //Settings from Metadata interface
 type Settings struct {
 	Connection connection.Manager `md:"connection,required"`
@@ -29,20 +31,24 @@ type Output struct {
 	MessageObj interface{}       `md:"messageObj"`
 }
 
+func init() {
+	logger = log.RootLogger()
+
+}
+
 //FromMap from Metadata interface
 func (o *Output) FromMap(values map[string]interface{}) error {
-
 	var err error
 	o.Message, err = coerce.ToString(values["message"])
 	if err != nil {
 		return err
 	}
 	o.MessageObj, err = coerce.ToObject(values["messageObj"])
-	log.Logger.Infof("messageObjA: %v ", values["messageObj"])
+	logger.Errorf("messageObjA: %v ", values["messageObj"])
 	if err != nil {
 		return err
 	}
-	log.Logger.Infof("messageObjB: %v", o.MessageObj)
+	logger.Errorf("messageObjB: %v", o.MessageObj)
 	o.Key, err = coerce.ToString(values["key"])
 	if err != nil {
 		return err
