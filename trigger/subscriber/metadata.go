@@ -39,10 +39,11 @@ func (o *Output) FromMap(values map[string]interface{}) error {
 		return err
 	}
 	o.MessageObj, err = coerce.ToObject(values["messageObj"])
+	fmt.Printf("messageObjA: %v \n", values["messageObj"])
 	if err != nil {
 		return err
 	}
-	fmt.Printf("messageObj: %v \n", o.MessageObj)
+	fmt.Printf("messageObjB: %v \n", o.MessageObj)
 	o.Key, err = coerce.ToString(values["key"])
 	if err != nil {
 		return err
