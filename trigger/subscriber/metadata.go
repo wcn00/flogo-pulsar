@@ -1,10 +1,9 @@
 package subscriber
 
 import (
-	"fmt"
-
 	"github.com/project-flogo/core/data/coerce"
 	"github.com/project-flogo/core/support/connection"
+	"github.com/project-flogo/core/support/log"
 )
 
 //Settings from Metadata interface
@@ -39,11 +38,11 @@ func (o *Output) FromMap(values map[string]interface{}) error {
 		return err
 	}
 	o.MessageObj, err = coerce.ToObject(values["messageObj"])
-	fmt.Printf("messageObjA: %v \n", values["messageObj"])
+	log.Logger.Infof("messageObjA: %v ", values["messageObj"])
 	if err != nil {
 		return err
 	}
-	fmt.Printf("messageObjB: %v \n", o.MessageObj)
+	log.Logger.Infof("messageObjB: %v", o.MessageObj)
 	o.Key, err = coerce.ToString(values["key"])
 	if err != nil {
 		return err
