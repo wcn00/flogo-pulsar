@@ -69,17 +69,18 @@
 				"value":"Latest"
 			},
 			{
-				"name": "dlqmaxdeliveries",
-				"type": "integer",
-				"required": false,
-				"value":10
-			},
-			{
 				"name": "dlqtopic",
 				"type": "string",
 				"required": false,
 				"value":""
+			},
+			{
+				"name": "dlqmaxdeliveries",
+				"type": "integer",
+				"required": false,
+				"value":3
 			}
+
 		]
 	}
 }
