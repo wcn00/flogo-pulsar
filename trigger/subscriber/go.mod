@@ -1,4 +1,4 @@
-module github.com/wcn00/flogo-pulsar/trigger/subscriber
+module github.com/wcn00/pulsar/trigger/subscriber
 
 go 1.14
 

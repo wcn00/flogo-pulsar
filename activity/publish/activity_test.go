@@ -10,14 +10,14 @@ import (
 	"github.com/project-flogo/core/data/resolve"
 	"github.com/project-flogo/core/support/test"
 	"github.com/stretchr/testify/assert"
-	"github.com/wcn00/flogo-pulsar/connector/connection"
+	"github.com/wcn00/pulsar/connector/connection"
 )
 
 var pulsarConGilJSON = []byte(`{
 	"connection": {
 		"id": "e1e890d0-de91-11e9-aef0-13201957902e",
 		"name": "pulsar",
-		"ref": "github.com/wcn00/flogo-pulsar/connection",
+		"ref": "github.com/wcn00/pulsar/connection",
 		"settings": {
 			"name": "TestConnectionToGil",
 			"description": "TestConnectionToGil",

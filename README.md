@@ -1,1 +1,1 @@
-# flogo-pulsar
+# pulsar

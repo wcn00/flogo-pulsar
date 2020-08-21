@@ -12,7 +12,7 @@ import (
 	"github.com/project-flogo/core/support/log"
 )
 
-var logger = log.ChildLogger(log.RootLogger(), "flogo-pulsar-publish")
+var logger = log.ChildLogger(log.RootLogger(), "pulsar-publish")
 
 func init() {
 	_ = activity.Register(&Activity{}, New)

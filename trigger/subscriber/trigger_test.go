@@ -8,15 +8,15 @@ import (
 	"github.com/project-flogo/core/support/test"
 	"github.com/project-flogo/core/trigger"
 	"github.com/stretchr/testify/assert"
-	_ "github.com/wcn00/flogo-pulsar/connection"
+	_ "github.com/wcn00/pulsar/connection"
 )
 
 const testConfig string = `{
-	"id": "flogo-pulsar",
-	"ref": " github.com/wcn00/flogo-pulsar/trigger",
+	"id": "pulsar",
+	"ref": " github.com/wcn00/pulsar/trigger",
 	"settings": {
 	  "connection": {
-		  "ref": "github.com/wcn00/flogo-pulsar/connection",
+		  "ref": "github.com/wcn00/pulsar/connection",
 		  "settings":{
 			"url": "pulsar://gil:6605"
 		  }

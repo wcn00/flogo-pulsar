@@ -14,7 +14,7 @@ import (
 	"github.com/project-flogo/core/support/log"
 )
 
-var logger = log.ChildLogger(log.RootLogger(), "flogo-pulsar-connection")
+var logger = log.ChildLogger(log.RootLogger(), "pulsar-connection")
 
 func init() {
 	connection.RegisterManager("connection", &PulsarConnection{})
