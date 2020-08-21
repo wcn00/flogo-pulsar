@@ -21,10 +21,11 @@
 			"value": "pulsar[+ssl]://localhost:6650"
 		},
 		{
-			"name": "cacert",
+			"name": "auth",
 			"type": "string",
-			"required": false,
-			"value": ""
+			"required": true,
+			"value": "None",
+			"allowed": ["None","TLS","JWT"]
 		},
 		{
 			"name": "allowinsecure",
@@ -33,11 +34,10 @@
 			"value": false
 		},
 		{
-			"name": "auth",
+			"name": "cacert",
 			"type": "string",
-			"required": true,
-			"value": "None",
-			"allowed": ["None","TLS","JWT"]
+			"required": false,
+			"value": ""
 		},
 		{
 			"name": "certFile",
