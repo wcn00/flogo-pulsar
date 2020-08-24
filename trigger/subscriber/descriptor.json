@@ -64,7 +64,7 @@
 	"output": [
 		{
 			"name": "msgObj",
-			"type": "object",
+			"type": "complex_object",
 			"required": false
 		}
 	]
