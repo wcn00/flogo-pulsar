@@ -9,35 +9,6 @@
 			"name": "connection",
 			"type": "connection",
 			"required": true
-		},
-		{
-			"name": "format",
-			"type": "string",
-			"required": true,
-			"allowed":["String","JSON"],
-			"value":"String"
-		}
-	],
-	"output": [
-		{
-			"name": "key",
-			"type": "string",
-			"required": false
-		},
-		{
-			"name": "properties",
-			"type": "params",
-			"required": false
-		},
-		{
-			"name": "message",
-			"type": "string",
-			"required": false
-		},
-		{
-			"name": "messageObj",
-			"type": "object",
-			"required": false
 		}
 	],
 	"handler": {
@@ -53,6 +24,13 @@
 				"type": "string",
 				"required": true,
 				"value":""
+			},
+			{
+				"name": "format",
+				"type": "string",
+				"required": true,
+				"allowed":["String","JSON"],
+				"value":"String"
 			},
 			{
 				"name": "subscriptiontype",
@@ -82,5 +60,12 @@
 			}
 
 		]
-	}
+	},
+	"output": [
+		{
+			"name": "msgObj",
+			"type": "object",
+			"required": false
+		}
+	]
 }
