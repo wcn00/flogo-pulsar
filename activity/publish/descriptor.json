@@ -33,25 +33,9 @@
 	],
 	"input": [
 		{
-			"name": "key",
-			"type": "string",
-			"required": false
-		},
-		{
-			"name": "properties",
-			"type": "params",
-			"description": "The message properties expressed as name:value pairs",
-			"required": false
-		},
-		{
-			"name": "message",
-			"type": "string",
-			"required": false
-		},
-		{
-			"name": "messageObj",
-			"type": "object",
-			"required": false
+			"name": "msgObj",
+			"type": "complex_object",
+			"required": true
 		}
 	],
 	"output": [
