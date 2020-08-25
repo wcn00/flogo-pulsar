@@ -26,13 +26,6 @@
 				"value":""
 			},
 			{
-				"name": "format",
-				"type": "string",
-				"required": true,
-				"allowed":["String","JSON"],
-				"value":"String"
-			},
-			{
 				"name": "subscriptiontype",
 				"type": "string",
 				"required": true,

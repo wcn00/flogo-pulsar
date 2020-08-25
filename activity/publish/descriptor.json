@@ -11,13 +11,6 @@
 			"required": true
 		},
 		{
-			"name": "format",
-			"type": "string",
-			"required": true,
-			"allowed":["String","JSON"],
-			"value":"String"
-		},
-		{
 			"name": "topic",
 			"required": true,
 			"type": "string",
